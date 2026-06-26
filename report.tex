@@ -1,0 +1,154 @@
+\documentclass[exp]{hitrep}
+
+\usepackage{seqsplit}
+\usepackage{xparse}
+\NewDocumentCommand{\code}{v}{\texttt{\seqsplit{#1}}}
+
+% 封面默认会根据编译当天的日期自动生成学年和学期：
+%   学年：2--12 月使用当前年份，1 月使用上一年份。
+%   学期：1 月为秋季，2--6 月为春季，7--8 月为夏季，9--12 月为秋季。
+
+% 例如在 2026 年 6 月编译时，默认显示为“2026 年春季学期”。
+% 如需手动指定学年和学期，取消下面两行注释并填写。
+% \yearterm{2025}
+% \semester{秋}
+
+\subject{课程名称}
+\department{学院（系）名称}
+\major{专业名称}
+\author{学生姓名}
+\studentid{学号}
+\studenttype{学生类别}
+
+\begin{document}
+
+\maketitle
+\toc
+\newpage
+
+
+
+\section{一级标题}
+这里是一级标题示例。
+\subsection{二级标题}
+这里是二级标题示例。
+
+
+
+\subsection{插入公式示例}
+这里是插入行间公式示例：
+\begin{equation}
+    y = f(x;\theta) + \varepsilon
+    \label{eq:template-model}
+\end{equation}
+
+这里是插入行内公式示例：\(\theta\)
+
+若需要多行推导，可使用如下对齐公式：
+\begin{align}
+    \bar{x} &= \frac{1}{n}\sum_{i=1}^{n}x_i, \label{eq:mean}\\
+    s^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2. \label{eq:variance}
+\end{align}
+
+\subsection{插入伪代码算法示例}
+
+\begin{algorithm}[H]
+    \caption{实验流程示例}
+    \label{alg:template-procedure}
+    \KwIn{原始数据 \(D\)，参数集合 \(\Theta\)}
+    \KwOut{实验结果 \(R\)}
+    \Function{RunExperiment\((D, \Theta)\)}{
+        对原始数据 \(D\) 进行预处理\;
+        初始化结果集合 \(R\)\;
+        \For{每个参数 \(\theta \in \Theta\)}{
+            使用 \(\theta\) 执行实验或计算\;
+            记录评价指标并加入 \(R\)\;
+        }
+        \KwRet \(R\)\;
+    }
+\end{algorithm}
+
+\subsection{分点枚举示例}
+
+如需要分点说明注意事项，可使用模板自带的 \verb|numpar| 环境，它会保持跟前文一致的行间距：
+
+\begin{numpar}
+    \item 第一项说明填写在这里。
+    \item 第二项说明填写在这里。
+    \item 第三项说明填写在这里。
+\end{numpar}
+
+\subsection{插入表格示例}
+
+\cref{tab:template-results}展示了三线表、多列表头、单元格换行和跨行单元格的写法。
+
+\begin{table}[H]
+    \centering
+    \caption{实验结果表格示例}
+    \label{tab:template-results}
+    \begin{tabular}{cccc}
+        \toprule
+        \multirow{2}{*}{实验组} & \multirow{2}{*}{方法} & \multicolumn{2}{c}{评价指标} \\
+        \cmidrule(lr){3-4}
+        & & \makecell{指标 A\\（单位）} & \makecell{指标 B\\（单位）} \\
+        \midrule
+        组 1 & 方法甲 & 0.95 & 12.3 \\
+        组 2 & 方法乙 & 0.91 & 10.8 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{插入图片示例}
+
+\cref{fig:template-single}展示单张图片的插入方式。请将图片文件放入 \verb|Fig| 文件夹，并修改 \verb|\includegraphics| 中的文件名。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Fig/image.png}
+    \caption{单图示例标题}
+    \label{fig:template-single}
+\end{figure}
+
+\cref{fig:template-subfigures} 展示子图排版方式，适合对比多个实验条件或多个结果视图。
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Fig/image.png}
+        \caption{子图 A}
+        \label{fig:template-subfig-a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.46\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Fig/image.png}
+        \caption{子图 B}
+        \label{fig:template-subfig-b}
+    \end{subfigure}
+    \caption{子图组合示例}
+    \label{fig:template-subfigures}
+\end{figure}
+
+\subsection{交叉引用}
+正文中可以通过 \verb|\cref{}| 引用图、表、公式和算法，例如 \cref{eq:template-model}、\cref{alg:template-procedure} 和 \cref{tab:template-results}。
+
+\subsection{代码示例}
+
+pyinput 输入片段：
+
+\begin{pyinput}
+result = compute_metric([1.0, 2.0, 3.0])
+print(result)
+\end{pyinput}
+
+正文中也可以使用行内代码，例如 \code{python report.py --input data.csv}。
+
+\subsection{参考文献引用示例}
+参考文献引用示例\cite{knuth1984texbook,lamport1994latex}。
+
+\section{参考文献}
+
+\printreferences{citations}
+
+\end{document}
